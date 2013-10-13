@@ -1,0 +1,31 @@
+html, body, #wrapper {
+	height:100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color:#000;
+	color: #fff;
+}
+
+#wrapper td {
+   vertical-align: middle;
+   text-align: center;
+}
+
+#timer {
+	font: bold 200px 'Helvetica Neue','Arial',sans-serif;
+	display: none;
+}
+
+#timeinput {
+	font: 50px 'Helvetica Neue','Arial',sans-serif;
+	outline: none;
+}
+
+#howlong {
+	font: bold 30px 'Helvetica Neue','Arial',sans-serif;
+	color: #222;
+	display: block;
+	margin-bottom: 1em;
+}
