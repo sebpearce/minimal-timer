@@ -67,7 +67,7 @@ function flashScreen() {
 function startTimer(totalSeconds) {
 
 	if (totalSeconds == 0) {
-	/*	$('#howlong').hide();
+	/*	$('#appname').hide();
 		$('#timeinput').hide();
 		$('#timer').show();	
 		$('#timer').text("Uh-oh.");	*/
@@ -77,7 +77,7 @@ function startTimer(totalSeconds) {
 	var beepSound = new Audio("vibes.wav"); // buffers automatically when created
 
 	flashScreen();
-	$('#howlong').hide();
+	$('#appname').hide();
 	$('#timeinput').hide();
 	$('#timer').show();
 	

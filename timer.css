@@ -13,19 +13,24 @@ html, body, #wrapper {
    text-align: center;
 }
 
+#appname {
+	font: 30px 'Helvetica Neue','Arial',sans-serif;
+	font-weight: 200;
+	color: #333;
+	display: block;
+	margin-bottom: 1em;
+	/*display: none;*/
+}
+
 #timer {
 	font: bold 200px 'Helvetica Neue','Arial',sans-serif;
 	display: none;
 }
 
 #timeinput {
-	font: 50px 'Helvetica Neue','Arial',sans-serif;
+	font: 40px 'Helvetica Neue','Arial',sans-serif;
+	font-weight: 200;
+	padding: 10px;
 	outline: none;
 }
 
-#howlong {
-	font: bold 30px 'Helvetica Neue','Arial',sans-serif;
-	color: #222;
-	display: block;
-	margin-bottom: 1em;
-}
