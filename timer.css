@@ -6,6 +6,7 @@ html, body, #wrapper {
 	border: 0;
 	background-color:#000;
 	color: #fff;
+	font-family: 'Helvetica Neue', 'Arial', sans-serif;
 }
 
 #wrapper td {
@@ -14,23 +15,31 @@ html, body, #wrapper {
 }
 
 #appname {
-	font: 30px 'Helvetica Neue','Arial',sans-serif;
-	font-weight: 200;
-	color: #555;
+	font-size: 30px;
+	font-weight: 400;
+	color: #888;
 	display: block;
 	margin-bottom: 1em;
-	/*display: none;*/
 }
 
 #timer {
-	font: bold 200px 'Helvetica Neue','Arial',sans-serif;
+	font-size: 250px;
+	font-weight: bold;
 	display: none;
+	letter-spacing: -0.01em;
 }
 
 #timeinput {
-	font: 40px 'Helvetica Neue','Arial',sans-serif;
+	font-size: 40px;
+	font-family: inherit;
 	font-weight: 200;
 	padding: 10px;
 	outline: none;
 }
 
+#finishedmessage {
+	margin-top: 1em;
+	font-size: 30px;
+	display: none;
+	color: #888;
+}

@@ -9,6 +9,8 @@
 
 
 var timerInterval;
+var isFinished = false;
+var beepSound;
 
 var longhandNumbers = {
 	'a thousand': '1000',
@@ -57,26 +59,19 @@ function convertToDigits(string) {
 	return string;
 }
 
-
-function flashScreen() {
-		//flash the screen
-		$('body').css('background-color', '#555');
-		setTimeout(function(){$('body').css('background-color', '#fff');}, 100);
-}
-
 function startTimer(totalSeconds) {
 
+	// ignore input if user typed "0 seconds" etc.
 	if (totalSeconds == 0) {
-	/*	$('#appname').hide();
-		$('#timeinput').hide();
-		$('#timer').show();	
-		$('#timer').text("Uh-oh.");	*/
 		return 0;
 	}
 
-	var beepSound = new Audio("vibes.wav"); // buffers automatically when created
+	// create beepSound audio element if it doesn't exist yet
+	if (!beepSound) {
+		// buffers automatically when created
+		beepSound = new Audio("vibes.wav"); 
+	}
 
-	flashScreen();
 	$('#appname').hide();
 	$('#timeinput').hide();
 	$('#timer').show();
@@ -105,9 +100,10 @@ function startTimer(totalSeconds) {
 		if (millisecondsLeft <= 0) {
 			beepSound.play();
 			clearInterval(timerInterval); 
-			flashScreen();
 			$('#timer').text('Done.');
+			$('#finishedmessage').show();
 			$(document).attr('title', 'Done.');
+			isFinished = true;
 			alert("Done.");
 			return 0; 
 		}
@@ -170,12 +166,10 @@ function convertUserInput(string) {
 		}
 	}
 
-	console.log("Processed string: " + string);
-
-		var ok = false;
-		var hours = 0;
-		var min = 0;
-		var sec = 0;
+	var ok = false;
+	var hours = 0;
+	var min = 0;
+	var sec = 0;
 
 	if (string.match(/h(ou?)rs?/)) {
 		var h = /(\d+)\s?h(ou?)rs?/.exec(string);	
@@ -237,7 +231,17 @@ function convertUserInput(string) {
 $(document).keydown(function(event){
 	if(event.keyCode == 13) {
 		//convert the input into an amount of seconds and send it to the startTimer function
-		startTimer( convertUserInput($('#timeinput').val()) );
+		if (!isFinished) {
+			startTimer( convertUserInput($('#timeinput').val()) );
+		} else {
+			$('#timer').hide();
+			$('#finishedmessage').hide();
+			$(document).attr('title', 'Timer');
+			$('#appname').show();
+			$('#timeinput').show();
+			$('#timeinput').focus();
+			isFinished = false;
+		}
 	}
 	
 });

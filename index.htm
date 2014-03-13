@@ -6,6 +6,17 @@
 
 	<link rel="shortcut icon" href="favicon.ico" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+	<meta name="description" content="A minimalist timer. No fluff.">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Timer">
+    <meta property="og:image" content="http://sebpearce.com/timer/timer.png">
+    <meta property="og:description" content="A minimalist timer. No fluff.">
+    <meta property="og:url" content="http://sebpearce.com/timer">
+    <meta property="og:site_name" content="sebpearce.com">
+
 	<link rel="stylesheet" href="Meyerweb_css_reset.css" />
 	<link rel="stylesheet" href="timer.css" />
 	<title>Timer</title>  
@@ -19,12 +30,13 @@
 			<td>
 				<label id="appname">Timer</label>
 				<input type="text" id="timeinput" placeholder="How long?" autofocus />
-				<span id="timer">05:00</span>
+				<span id="timer">05:00</span><br />
+				<span id="finishedmessage">Press enter to start again.</span>
 			</td>
 		</tr>
 	</table>
 
-	<script type="text/javascript" src="jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="jquery-1.11.0.js"></script>
 	<script type="text/javascript" src="timer.js"></script>
 
 </body>
