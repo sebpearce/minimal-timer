@@ -214,6 +214,13 @@ function convertUserInput(string) {
 		ok = true;
 	}
 
+	if (string.match(/^[0-9]+$/)) {
+		hours = 0;
+		min = parseInt(string) * 60;
+		sec = 0;
+		ok = true;
+	}
+
 	result = hours + min + sec;
 	if (!ok || isNaN(result) || result <= 0)
 		return 0;
