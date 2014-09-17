@@ -59,6 +59,16 @@ function convertToDigits(string) {
 	return string;
 }
 
+function getTimeURLQuery()
+{
+	var query = window.location.search.substring(1);
+		if (query) {
+			query = query.replace(/%20/g, ' ');
+			return query;
+		}
+	return false;
+}
+
 function startTimer(totalSeconds) {
 
 	// ignore input if user typed "0 seconds" etc.
@@ -234,6 +244,8 @@ function convertUserInput(string) {
 }
 
 
+
+
 //react to user keypresses
 $(document).keydown(function(event){
 	if(event.keyCode == 13) {
@@ -252,3 +264,14 @@ $(document).keydown(function(event){
 	}
 	
 });
+
+$(document).ready(function(){
+
+	var query = getTimeURLQuery();
+
+	if (query) {
+		startTimer( convertUserInput(query) );
+	}
+
+});
+
