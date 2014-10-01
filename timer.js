@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 
 	Author: Seb Pearce (http://sebpearce.com)
@@ -6,11 +8,12 @@
 
 */
 
-
-
 var timerInterval;
 var isFinished = false;
+var isRunning = false;
+var isPaused = false;
 var beepSound;
+var secondsLeft = 0;
 
 var longhandNumbers = {
 	'a thousand': '1000',
@@ -84,6 +87,7 @@ function startTimer(totalSeconds) {
 
 	$('#appname').hide();
 	$('#timeinput').hide();
+	$('#message').fadeTo('fast', 0);
 	$('#timer').show();
 	
 	// clear any previous timers
@@ -94,37 +98,59 @@ function startTimer(totalSeconds) {
 	var end = start + totalSeconds * 1000; 
 
 	// show the time immediately before we start counting down	
-	totalTime = calcTime(totalSeconds);
+	var totalTime = calcTime(totalSeconds);
 	$('#timer').text(totalTime);
 	$(document).attr('title', totalTime);
+
+	isRunning = true;
 	
 	//every second, do this:
 	timerInterval = setInterval(function() {
 	
 		// update "now"
-		now = $.now();
+		var now = $.now();
 		// update how much time is remaining
-		millisecondsLeft = end - now;
+		var millisecondsLeft = end - now;
 
 		//when timer is finished
 		if (millisecondsLeft <= 0) {
 			beepSound.play();
 			clearInterval(timerInterval); 
 			$('#timer').text('Done.');
-			$('#finishedmessage').show();
+			$('#message').text('Press enter to start again.');
+			$('#message').fadeTo('fast', 1);
 			$(document).attr('title', 'Done.');
 			isFinished = true;
-			alert("Done.");
+			isRunning = false;
+			alert('Done.');
 			return 0; 
 		}
 		// convert to seconds	
 		secondsLeft = Math.round(millisecondsLeft / 1000);
 		// update span text with new time
-		result = calcTime(secondsLeft);
+		var result = calcTime(secondsLeft);
 		$(document).attr('title', result);
 		$('#timer').text(result);
 
 	}, 1000);
+
+}
+
+
+function pauseTimer() {
+
+	clearInterval(timerInterval);
+	isPaused = true;
+	$('#message').text('Timer paused.');
+	$('#message').fadeTo('fast', 1);
+
+}
+
+function unpauseTimer() {
+
+	startTimer(secondsLeft);
+	isPaused = false;
+	$('#message').fadeTo('fast', 0);
 
 }
 
@@ -154,7 +180,6 @@ function leadingZero(time) {
 	return (time < 10) ? "0" + time : + time;
 
 }
-
 
 function convertUserInput(string) {
 
@@ -231,12 +256,13 @@ function convertUserInput(string) {
 		ok = true;
 	}
 
-	result = hours + min + sec;
+	var result = hours + min + sec;
 	if (!ok || isNaN(result) || result <= 0)
 		return 0;
 	else {
 		if (result > 86400) {
-			alert("The maximum time you can set is 24 hours.");
+			$('#message').text('The maximum time you can set is 24 hours.');
+			$('#message').fadeTo('fast', 1);
 			return 0;
 		}
 		return result;
@@ -248,19 +274,41 @@ function convertUserInput(string) {
 
 //react to user keypresses
 $(document).keydown(function(event){
+
 	if(event.keyCode == 13) {
 		//convert the input into an amount of seconds and send it to the startTimer function
-		if (!isFinished) {
+		if (isRunning && !isPaused) {
+			pauseTimer();
+		} else if (isRunning && isPaused) {
+			unpauseTimer();
+		} else if (!isRunning && !isFinished) {
 			startTimer( convertUserInput($('#timeinput').val()) );
-		} else {
+		} else if (!isRunning && isFinished) {
 			$('#timer').hide();
-			$('#finishedmessage').hide();
+			$('#message').fadeTo('fast', 0);
 			$(document).attr('title', 'Timer');
 			$('#appname').show();
 			$('#timeinput').show();
 			$('#timeinput').focus();
 			isFinished = false;
 		}
+	} else if (event.keyCode == 32) {
+		if (isRunning && !isPaused) {
+			pauseTimer();
+		} else if (isRunning && isPaused) {
+			unpauseTimer();
+		}	
+	} else if (event.keyCode == 27) {
+			clearInterval(timerInterval);
+			$('#timer').hide();
+			$('#message').fadeTo('fast', 0);
+			$(document).attr('title', 'Timer');
+			$('#appname').show();
+			$('#timeinput').show();
+			$('#timeinput').focus();
+			isFinished = false;
+			isRunning = false;
+			isPaused = false;
 	}
 	
 });

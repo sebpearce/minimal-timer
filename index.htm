@@ -25,16 +25,14 @@
 
 <body>
 
-	<table id="wrapper">
-		<tr>
-			<td>
-				<label id="appname">Timer</label>
-				<input type="text" id="timeinput" placeholder="How long?" autofocus />
-				<span id="timer">05:00</span><br />
-				<span id="finishedmessage">Press enter to start again.</span>
-			</td>
-		</tr>
-	</table>
+	<div id="wrapper">
+    <div id="timer-container">
+    	<label id="appname">Timer</label>
+    	<input type="text" id="timeinput" placeholder="How long?" autofocus />
+    	<span id="timer">05:00</span>
+    	<span id="message">&nbsp;</span>
+    </div>
+  </div>
 
 	<script type="text/javascript" src="jquery-1.11.0.js"></script>
 	<script type="text/javascript" src="timer.js"></script>
