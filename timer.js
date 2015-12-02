@@ -64,8 +64,7 @@
     return string;
   }
 
-  function getTimeURLQuery()
-  {
+  function getTimeURLQuery() {
     var query = window.location.search.substring(1);
       if (query) {
         query = query.replace(/%20/g, ' ');
@@ -84,31 +83,31 @@
     // create beepSound audio element if it doesn't exist yet
     if (!beepSound) {
       // buffers automatically when created
-      beepSound = new Audio("vibes.wav"); 
+      beepSound = new Audio("vibes.wav");
     }
 
     $('#appname').hide();
     $('#timeinput').hide();
     $('#message').fadeTo('fast', 0);
     $('#timer').show();
-    
+
     // clear any previous timers
     clearInterval(timerInterval);
-    
-    // set start to current time as Unix timestamp
-    var start = (new Date).getTime(); 
-    var end = start + totalSeconds * 1000; 
 
-    // show the time immediately before we start counting down  
+    // set start to current time as Unix timestamp
+    var start = (new Date).getTime();
+    var end = start + totalSeconds * 1000;
+
+    // show the time immediately before we start counting down
     var totalTime = calcTime(totalSeconds);
     $('#timer').text(totalTime);
     $(document).attr('title', totalTime);
 
     isRunning = true;
-    
+
     //every second, do this:
     timerInterval = setInterval(function() {
-    
+
       // update "now"
       var now = $.now();
       // update how much time is remaining
@@ -117,7 +116,7 @@
       //when timer is finished
       if (millisecondsLeft <= 0) {
         beepSound.play();
-        clearInterval(timerInterval); 
+        clearInterval(timerInterval);
         $('#timer').text('Done.');
         $('#message').text('Press enter to start again.');
         $('#message').fadeTo('fast', 1);
@@ -125,9 +124,9 @@
         isFinished = true;
         isRunning = false;
         alert('Done.');
-        return 0; 
+        return 0;
       }
-      // convert to seconds 
+      // convert to seconds
       secondsLeft = Math.round(millisecondsLeft / 1000);
       // update span text with new time
       var result = calcTime(secondsLeft);
@@ -186,7 +185,7 @@
   function convertUserInput(string) {
 
     // convert any longform numbers to digits
-    string = convertToDigits(string); 
+    string = convertToDigits(string);
 
     // check for two digits separated by a space and handle them
     if (string.match(/\d\s\d/)) {
@@ -209,31 +208,31 @@
     var sec = 0;
 
     if (string.match(/h(ou?)rs?/)) {
-      var h = /(\d+)\s?h(ou?)rs?/.exec(string); 
+      var h = /(\d+)\s?h(ou?)rs?/.exec(string);
       hours = parseInt((h[1]),10) * 3600; // number of hours
       ok = true;
     } else if (string.match(/(\d\s|\d)h/)) {
-      var h = /(\d+)\s?h/.exec(string); 
+      var h = /(\d+)\s?h/.exec(string);
       hours = parseInt((h[1]),10) * 3600; // number of hours
       ok = true;
-    } else hours = 0; 
+    } else hours = 0;
 
     if (string.match(/min(ute?)s?/)) {
-      var m = /(\d+)\s?min(ute?)s?/.exec(string); 
+      var m = /(\d+)\s?min(ute?)s?/.exec(string);
       min = parseInt((m[1]),10) * 60; // number of minutes
       ok = true;
     } else if (string.match(/(\d\s|\d)m/)) {
-      var m = /(\d+)\s?m/.exec(string); 
+      var m = /(\d+)\s?m/.exec(string);
       min = parseInt((m[1]),10) * 60; // number of minutes
       ok = true;
     } else min = 0;
 
     if (string.match(/sec(ond?)s?/)) {
-      var s = /(\d+)\s?sec(ond?)s?/.exec(string); 
+      var s = /(\d+)\s?sec(ond?)s?/.exec(string);
       sec = parseInt((s[1]),10); // number of seconds
       ok = true;
     } else if (string.match(/(\d\s|\d)s/)) {
-      var s = /(\d+)\s?s/.exec(string); 
+      var s = /(\d+)\s?s/.exec(string);
       sec = parseInt((s[1]),10); // number of seconds
       ok = true;
     } else sec = 0;
@@ -299,7 +298,7 @@
         pauseTimer();
       } else if (isRunning && isPaused) {
         unpauseTimer();
-      } 
+      }
     } else if (event.keyCode == 27) {
         clearInterval(timerInterval);
         $('#timer').hide();
@@ -312,7 +311,7 @@
         isRunning = false;
         isPaused = false;
     }
-    
+
   });
 
   $(document).ready(function(){
