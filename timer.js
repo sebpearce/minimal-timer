@@ -8,7 +8,7 @@
 
 */
 
-(function timer(){
+{
 
   let timerInterval;
   let isFinished = false;
@@ -327,4 +327,4 @@
 
   });
 
-})();
+}
