@@ -10,14 +10,14 @@
 
 (function timer(){
 
-  var timerInterval;
-  var isFinished = false;
-  var isRunning = false;
-  var isPaused = false;
-  var beepSound;
-  var secondsLeft = 0;
+  let timerInterval;
+  let isFinished = false;
+  let isRunning = false;
+  let isPaused = false;
+  let beepSound;
+  let secondsLeft = 0;
 
-  var longhandNumbers = {
+  const longhandNumbers = {
     'a thousand': '1000',
     'one thousand': '1000',
     'thousand': '1000',
@@ -57,15 +57,15 @@
 
   function convertToDigits(string) {
     // iterate through longhandNumbers and replace the key in string with the value
-    for (var key in longhandNumbers) {
-      var re = new RegExp(key,"gi"); //gi = global + case insensitive
+    for (let key in longhandNumbers) {
+      let re = new RegExp(key,"gi"); //gi = global + case insensitive
       string = string.replace(re, longhandNumbers[key]);
     }
     return string;
   }
 
   function getTimeURLQuery() {
-    var query = window.location.search.substring(1);
+    let query = window.location.search.substring(1);
       if (query) {
         query = query.replace(/%20/g, ' ');
         return query;
@@ -95,11 +95,11 @@
     clearInterval(timerInterval);
 
     // set start to current time as Unix timestamp
-    var start = (new Date).getTime();
-    var end = start + totalSeconds * 1000;
+    let start = (new Date).getTime();
+    let end = start + totalSeconds * 1000;
 
     // show the time immediately before we start counting down
-    var totalTime = calcTime(totalSeconds);
+    let totalTime = calcTime(totalSeconds);
     $('#timer').text(totalTime);
     $(document).attr('title', totalTime);
 
@@ -109,9 +109,9 @@
     timerInterval = setInterval(function() {
 
       // update "now"
-      var now = $.now();
+      let now = $.now();
       // update how much time is remaining
-      var millisecondsLeft = end - now;
+      let millisecondsLeft = end - now;
 
       //when timer is finished
       if (millisecondsLeft <= 0) {
@@ -129,7 +129,7 @@
       // convert to seconds
       secondsLeft = Math.round(millisecondsLeft / 1000);
       // update span text with new time
-      var result = calcTime(secondsLeft);
+      let result = calcTime(secondsLeft);
       $(document).attr('title', result);
       $('#timer').text(result);
 
@@ -159,19 +159,22 @@
   // give it an amount of seconds and it will format it as total time remaining and return a string
   function calcTime(seconds) {
 
+    let timeStr;
+
     //find out how many hours/mins/seconds are left
-    var hours = Math.floor(seconds / 3600);
+    let hours = Math.floor(seconds / 3600);
     seconds -= hours * (3600);
-    var minutes = Math.floor(seconds / 60);
+    let minutes = Math.floor(seconds / 60);
     seconds -= minutes * (60);
 
     // don't show hours/minutes if we don't need them
-    if (hours > 0)
-      var timeStr = (leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(seconds));
-    else if (minutes > 0)
-      var timeStr = (leadingZero(minutes) + ":" + leadingZero(seconds));
-    else
-      var timeStr = leadingZero(seconds);
+    if (hours > 0) {
+      timeStr = (leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(seconds));
+    } else if (minutes > 0) {
+      timeStr = (leadingZero(minutes) + ":" + leadingZero(seconds));
+    } else {
+      timeStr = leadingZero(seconds);
+    }
 
     return timeStr;
   }
@@ -189,7 +192,7 @@
 
     // check for two digits separated by a space and handle them
     if (string.match(/\d\s\d/)) {
-      var dub = /(\d+)\s(\d+)/g.exec(string);
+      let dub = /(\d+)\s(\d+)/g.exec(string);
       // dub[0] should be the whole of the matched regex, and [1] & [2] are the \d values
       if (dub.length == 3) {
         if (dub[2] == 1000) { // if it's 1000, multiply [1] by [2] e.g. 2 1000 -> 2000
@@ -202,49 +205,49 @@
       }
     }
 
-    var ok = false;
-    var hours = 0;
-    var min = 0;
-    var sec = 0;
+    let ok = false;
+    let hours = 0;
+    let min = 0;
+    let sec = 0;
 
     if (string.match(/h(ou?)rs?/)) {
-      var h = /(\d+)\s?h(ou?)rs?/.exec(string);
+      let h = /(\d+)\s?h(ou?)rs?/.exec(string);
       hours = parseInt((h[1]),10) * 3600; // number of hours
       ok = true;
     } else if (string.match(/(\d\s|\d)h/)) {
-      var h = /(\d+)\s?h/.exec(string);
+      let h = /(\d+)\s?h/.exec(string);
       hours = parseInt((h[1]),10) * 3600; // number of hours
       ok = true;
     } else hours = 0;
 
     if (string.match(/min(ute?)s?/)) {
-      var m = /(\d+)\s?min(ute?)s?/.exec(string);
+      let m = /(\d+)\s?min(ute?)s?/.exec(string);
       min = parseInt((m[1]),10) * 60; // number of minutes
       ok = true;
     } else if (string.match(/(\d\s|\d)m/)) {
-      var m = /(\d+)\s?m/.exec(string);
+      let m = /(\d+)\s?m/.exec(string);
       min = parseInt((m[1]),10) * 60; // number of minutes
       ok = true;
     } else min = 0;
 
     if (string.match(/sec(ond?)s?/)) {
-      var s = /(\d+)\s?sec(ond?)s?/.exec(string);
+      let s = /(\d+)\s?sec(ond?)s?/.exec(string);
       sec = parseInt((s[1]),10); // number of seconds
       ok = true;
     } else if (string.match(/(\d\s|\d)s/)) {
-      var s = /(\d+)\s?s/.exec(string);
+      let s = /(\d+)\s?s/.exec(string);
       sec = parseInt((s[1]),10); // number of seconds
       ok = true;
     } else sec = 0;
 
     if (string.match(/^(\d+):(\d+):(\d+)$/)) {
-      var d = /(\d+):(\d+):(\d+)/.exec(string);
+      let d = /(\d+):(\d+):(\d+)/.exec(string);
       hours = parseInt((d[1]),10) * 3600;
       min = parseInt((d[2]),10) * 60;
       sec = parseInt((d[3]),10);
       ok = true;
     } else if (string.match(/^(\d+):(\d+)$/)) {
-      var d = /(\d+):(\d+)/.exec(string);
+      let d = /(\d+):(\d+)/.exec(string);
       min = parseInt((d[1]),10) * 60;
       sec = parseInt((d[2]),10);
       ok = true;
@@ -257,7 +260,7 @@
       ok = true;
     }
 
-    var result = hours + min + sec;
+    let result = hours + min + sec;
     if (!ok || isNaN(result) || result <= 0)
       return 0;
     else {
@@ -300,23 +303,23 @@
         unpauseTimer();
       }
     } else if (event.keyCode == 27) {
-        clearInterval(timerInterval);
-        $('#timer').hide();
-        $('#message').fadeTo('fast', 0);
-        $(document).attr('title', 'Timer');
-        $('#appname').show();
-        $('#timeinput').show();
-        $('#timeinput').focus();
-        isFinished = false;
-        isRunning = false;
-        isPaused = false;
+      clearInterval(timerInterval);
+      $('#timer').hide();
+      $('#message').fadeTo('fast', 0);
+      $(document).attr('title', 'Timer');
+      $('#appname').show();
+      $('#timeinput').show();
+      $('#timeinput').focus();
+      isFinished = false;
+      isRunning = false;
+      isPaused = false;
     }
 
   });
 
   $(document).ready(function(){
 
-    var query = getTimeURLQuery();
+    let query = getTimeURLQuery();
 
     if (query) {
       startTimer( convertUserInput(query) );
