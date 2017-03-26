@@ -1,0 +1,57 @@
+html, body, #wrapper {
+	height:100%;
+	width: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color:#000;
+	color: #fff;
+	font-family: 'Helvetica Neue', 'Arial', sans-serif;
+	text-rendering: optimizeLegibility;
+}
+
+#timer-container {
+	text-align: center;
+	/* easy vertical align trick */
+	position: relative;
+	top: 52%;
+	-webkit-transform: translateY(-52%);
+	-ms-transform: translateY(-52%);
+	transform: translateY(-52%);
+}
+
+#appname {
+	font-size: 30px;
+	font-weight: 400;
+	color: #888;
+	display: block;
+	margin-bottom: 1em;
+}
+
+#timer {
+	font-size: 250px;
+	/*font-size: 28vw;*/
+	font-size: 24vw;
+	font-weight: bold;
+	display: none;
+	letter-spacing: -0.01em;
+	margin: 0;
+	line-height: 80%;
+}
+
+#timeinput {
+	font-size: 40px;
+	font-family: inherit;
+	font-weight: 200;
+	padding: 10px;
+	outline: none;
+}
+
+#message {
+	margin-top: 20px;
+	font-size: 30px;
+	display: block;
+	opacity: 0;
+	color: #888;
+}
